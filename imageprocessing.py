@@ -102,32 +102,18 @@ class InsectCropperApp(QMainWindow):
                 self.display_image(self.cropped_image)
 
     def display_image(self, image):
-        #get the size of QLabel
-        label_width = self.image_label.width()
-        label_height = self.image_label.height()
-
-        #get the size of original image
-        original_height, original_width, _ = image.shape
-
-        #scale
-        self.scale_factor_w = label_width / original_width
-        self.scale_factor_h = label_height / original_height
-        new_width = int(original_width * self.scale_factor_w)
-        new_height = int(original_height * self.scale_factor_h)
-
-        #resize image
-        resized_image = cv2.resize(image, (new_width, new_height), interpolation=cv2.INTER_AREA)
-
         #convert to Qt format
-        rgb_image = cv2.cvtColor(resized_image, cv2.COLOR_BGR2RGB)
+        rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         h, w, ch = rgb_image.shape
         bytes_per_line = ch * w
         qt_image = QImage(rgb_image.data, w, h, bytes_per_line, QImage.Format_RGB888)
 
         #display
         pixmap = QPixmap.fromImage(qt_image)
+        #Image isometric scaling
+        pixmap = pixmap.scaled(self.image_label.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
         self.image_label.setPixmap(pixmap)
-        self.image_label.setScaledContents(True)
+        #self.image_label.setScaledContents(True)
 
     def save_cropped_image(self):
         """save cropped image"""
