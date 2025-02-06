@@ -57,7 +57,7 @@ Please make sure that you have Python 3 installed with all the required dependen
 
     '''
 
-    git clone https://gitlab.kit.edu/uyugr/insects.git 
+    git clone https://github.com/Monika24-hui/insects.git 
 
     '''
 
@@ -84,13 +84,13 @@ Please make sure that you have Python 3 installed with all the required dependen
 
 1. There are 3 buttons at the bottom of the application, click the button "Load Image" to choose one image which needs to be cropped.
 
-2. *manualcrop: After loading image, click the button "manual crop", and thenuser can draw a bounding box on the image.
+2. *manualcrop: After loading image, click the button "manual crop", and then user can draw a bounding box on the image.
 
     *imageprocessing: After loading image, click the button "crop insect", the image can be cropped automatically.
    
     *objectdetection: After loading image, click the button "detect and crop Insect", the image can be cropped automatically. (When use this method, user needs always adjust the size of application interface)
 
-3. click the button ""save crop", the cropped result can be saved in the folder you choose.
+3. click the button "save crop", the cropped result can be saved in the folder you choose.
 
 ## Further Enhancement
 
