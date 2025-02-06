@@ -80,6 +80,8 @@ class MainWindow(QMainWindow):
             rgb_image = cv2.cvtColor(self.original_image, cv2.COLOR_BGR2RGB)
             self.image_label.set_image(rgb_image)
             self.detect_button.setEnabled(True)
+            self.filename = os.path.basename(file_path)
+            print("Selected file name:", self.filename)
 
     def detect_and_crop(self):
         """Detect insects and crop the detected region"""
@@ -109,7 +111,7 @@ class MainWindow(QMainWindow):
             return
 
         options = QFileDialog.Options()
-        file_path, _ = QFileDialog.getSaveFileName(self, "Save Cropped Image", "D:/insects/cropped_images/modelcrop/", "Images (*.png *.jpg *.jpeg *.bmp)", options=options)
+        file_path, _ = QFileDialog.getSaveFileName(self, "Save Cropped Image", self.filename, "Images (*.png *.jpg *.jpeg *.bmp)", options=options)
         if file_path:
             cv2.imwrite(file_path, self.cropped_image)
             print(f"Cropped image saved to {file_path}")

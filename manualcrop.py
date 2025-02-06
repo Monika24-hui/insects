@@ -1,6 +1,7 @@
 import sys
 import cv2
 import numpy as np
+import os
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QFileDialog, QWidget
 from PyQt5.QtGui import QPixmap, QImage, QPainter, QPen
 from PyQt5.QtCore import Qt, QPoint
@@ -97,10 +98,12 @@ class MyWindow(QMainWindow):
 
     def load_image(self):
         options = QFileDialog.Options()
-        filepath, _ = QFileDialog.getOpenFileName(self, "open iamge file", "D:/insects/Images/", "Images(*.png *.jpg *.bmp)", options=options)
+        filepath, _ = QFileDialog.getOpenFileName(self, "open iamge file", "", "Images(*.png *.jpg *.bmp)", options=options)
         if filepath:
             self.image = cv2.imread(filepath)
             self.image_label.set_image(self.image)
+            self.filename = os.path.basename(filepath)
+            print("Selected file name:", self.filename)
 
     def enable_manual_crop(self):
         if self.image_label.image is None:
@@ -152,7 +155,7 @@ class MyWindow(QMainWindow):
         if self.cropped_image is None:
             return
         options = QFileDialog.Options()
-        filepath, _ = QFileDialog.getSaveFileName(self, "save crop", "D:/insects/cropped_images/manualcropped/", "Images(*.png *.jpg *.jpeg *.bmp)", options=options)
+        filepath, _ = QFileDialog.getSaveFileName(self, "save crop", self.filename, "Images(*.png *.jpg *.jpeg *.bmp)", options=options)
         if filepath:
             cv2.imwrite(filepath, self.cropped_image)
             print(f"cropped image is saved to{filepath}")

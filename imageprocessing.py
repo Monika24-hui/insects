@@ -1,6 +1,7 @@
 import sys
 import cv2
 import numpy as np
+import os
 from PyQt5.QtWidgets import (
     QApplication, QDesktopWidget, QMainWindow, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QFileDialog, QWidget
 )
@@ -53,7 +54,7 @@ class InsectCropperApp(QMainWindow):
         options = QFileDialog.Options()
         #you can change the filepath
         file_path, _ = QFileDialog.getOpenFileName(
-            self, "Open Image File", "D:/insects/Images/", "Images (*.png *.jpg *.jpeg *.bmp)", options=options
+            self, "Open Image File", "", "Images (*.png *.jpg *.jpeg *.bmp)", options=options
         )
 
         if file_path:
@@ -61,6 +62,8 @@ class InsectCropperApp(QMainWindow):
             self.cv_image = cv2.imread(file_path)
             self.display_image(self.cv_image)
             self.crop_button.setEnabled(True)
+            self.filename = os.path.basename(file_path)
+            print("Selected file name:", self.filename)
 
     def crop_insect(self):
         if self.cv_image is not None:
@@ -131,7 +134,7 @@ class InsectCropperApp(QMainWindow):
         if self.cropped_image is None:
             return
         options = QFileDialog.Options()
-        file_path, _ = QFileDialog.getSaveFileName(self, "Save Cropped Image", "D:/insects/cropped_images/classicalprocessing/", "Images (*.png *.jpg *.jpeg *.bmp)", options=options)
+        file_path, _ = QFileDialog.getSaveFileName(self, "Save Cropped Image", self.filename, "Images (*.png *.jpg *.jpeg *.bmp)", options=options)
         if file_path:
             cv2.imwrite(file_path, self.cropped_image)
             print(f"Cropped image saved to {file_path}")
