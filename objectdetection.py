@@ -20,6 +20,7 @@ class ImageLabel(QLabel):
         bytes_per_line = channel * width
         q_image = QImage(image.data, width, height, bytes_per_line, QImage.Format_RGB888)
         pixmap = QPixmap.fromImage(q_image)
+        pixmap = pixmap.scaled(self.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
         self.setPixmap(pixmap)
         self.setScaledContents(True)
 
